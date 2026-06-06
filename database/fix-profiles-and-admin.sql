@@ -34,19 +34,19 @@ CREATE TRIGGER on_auth_user_created
 -- 2. Backfill: create profiles for existing users who don't have one
 INSERT INTO public.profiles (user_id, email, full_name, role)
 SELECT 
-  id,
+  id::text,
   email,
   raw_user_meta_data->>'full_name',
   'user'
 FROM auth.users
-WHERE id NOT IN (SELECT user_id FROM public.profiles)
+WHERE id::text NOT IN (SELECT user_id FROM public.profiles)
 ON CONFLICT (user_id) DO NOTHING;
 
 -- Also backfill balances
 INSERT INTO public.user_balances (user_id, balance, account_balance, profit_balance, trading_balance, funding_balance)
-SELECT id, 0, 0, 0, 0, 0
+SELECT id::text, 0, 0, 0, 0, 0
 FROM auth.users
-WHERE id NOT IN (SELECT user_id FROM public.user_balances)
+WHERE id::text NOT IN (SELECT user_id FROM public.user_balances)
 ON CONFLICT (user_id) DO NOTHING;
 
 -- 3. Make lazarus99x@gmail.com an admin
