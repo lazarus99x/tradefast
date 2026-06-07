@@ -13,7 +13,7 @@ export function SmartsuppChat() {
     // Prevent duplicate loads
     if (document.getElementById("smartsupp-script")) return;
 
-    const key = "b9703d92995ac0881c6bb8830c1b7a0929733400";
+    const key = "7e06c2ce2477f0391698d6d0b2e9419263e18600";
 
     // Initialize smartsupp
     (window as any)._smartsupp = (window as any)._smartsupp || {};
